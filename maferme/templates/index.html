@@ -1,0 +1,69 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Page avec Fond Transparent</title>
+  <style>
+    /* Style pour le fond et la superposition */
+    body, html {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      font-family: Arial, sans-serif;
+    }
+
+    #hero {
+      background-image: url("{% static 'assets/img/hero-bg-2.jpg' %}");
+      background-size: cover;
+      background-position: center;
+      position: relative;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    /* Superposition verte transparente */
+    #hero::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(0, 255, 0, 0.3); /* vert transparent */
+    }
+
+    /* Contenu à l'intérieur de la section #hero */
+    .overlay-content {
+      position: relative;
+      color: #ffffff;
+      text-align: center;
+      z-index: 1; /* Assurez-vous que le contenu est au-dessus de la superposition */
+    }
+
+    #hero h1 {
+      font-size: 3rem;
+      margin: 0;
+    }
+
+    #hero p {
+      font-size: 1.2rem;
+      margin: 10px 0 0;
+    }
+  </style>
+</head>
+<body>
+  
+  <div id="hero">
+    <div class="overlay-content">
+      <h1>Bienvenue sur notre site</h1>
+      <p>Découvrez notre contenu incroyable avec un fond magnifique.</p>
+      <a href="{% url 'connexion' %}" class="button">Se Connecter</a>
+    </div>
+  </div>
+
+</body>
+</html>

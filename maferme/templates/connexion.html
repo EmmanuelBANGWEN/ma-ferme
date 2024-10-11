@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Page de Connexion</title>
+  <style>
+    /* Style de base */
+    body, html {
+      height: 100%;
+      margin: 0;
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: #f4f4f4;
+    }
+
+    /* Style du conteneur de la connexion */
+    .login-container {
+      background-color: #fff;
+      padding: 20px 40px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      width: 300px;
+      text-align: center;
+    }
+
+    /* Titre */
+    h2 {
+      margin-bottom: 20px;
+      color: #333;
+    }
+
+    /* Style des messages d'erreur */
+    .error-message {
+      color: red;
+      margin-bottom: 10px;
+      font-size: 0.9rem;
+    }
+
+    /* Style des champs de saisie */
+    input[type="text"], input[type="password"] {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      box-sizing: border-box;
+    }
+
+    /* Style du bouton de connexion */
+    .login-btn {
+      background-color: #4CAF50;
+      color: white;
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+      width: 100%;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+
+    /* Changement de couleur du bouton au survol */
+    .login-btn:hover {
+      background-color: #45a049;
+    }
+
+    /* Lien de mot de passe oublié */
+    .forgot-password {
+      display: block;
+      margin-top: 10px;
+      color: #4CAF50;
+      text-decoration: none;
+      font-size: 0.9rem;
+    }
+    
+    .forgot-password:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  
+  <div class="login-container">
+    <h2>Connexion</h2>
+    
+    <!-- Messages d'erreur -->
+    {% if messages %}
+      {% for message in messages %}
+        <div class="error-message">{{ message }}</div>
+      {% endfor %}
+    {% endif %}
+
+    <form action="." method="post">
+        {% csrf_token %}
+        <input type="text" placeholder="Nom d'utilisateur" name="username" required>
+        <input type="password" placeholder="Mot de passe" name="password" required>
+        <button type="submit" class="login-btn">Se connecter</button>
+    </form>
+    
+  </div>
+
+</body>
+</html>

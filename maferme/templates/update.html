@@ -1,0 +1,98 @@
+{% extends 'tableau.html' %}
+{% block contents %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %} Mise à Jour {% endblock title %}</title>
+</head>
+<body>
+  <h2>{% block titre %} Mise à Jour des Informations {% endblock titre %}</h2>
+  
+  <form action="." method="post">
+    {% csrf_token %}
+    
+    <table>
+      <thead>
+        <tr>
+          <th>Id</th>
+          <th>Date_naissance</th>
+          <th>date_enregistrement</th>
+
+          <th>Age</th>
+          <th>Poids</th>
+          <th>sexe</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for animal in mes_animaux %}
+<tr>
+    <td>{{ animal.identifiant }}</td>
+    <td><input type="date" name="date_naissance_{{ animal.id }}" value="{{ animal.date_naissance|date:"Y-m-d" }}"></td>
+    <td><input type="date" name="date_enregistrement_{{ animal.id }}" value="{{ animal.date_enregistrement|date:"Y-m-d" }}"></td>
+    
+    <td>{{ animal.age }}</td>
+    <td><input type="number" name="poids_{{ animal.id }}" value="{{ animal.poids }}"></td>
+    <td>
+      <select name="sexe_{{ animal.id }}">
+        <option value="Male" {% if animal.sexe == 'Male' %}selected{% endif %}>Male</option>
+        <option value="Female" {% if animal.sexe == 'Female' %}selected{% endif %}>Female</option>
+      </select>
+    </td>
+</tr>
+{% endfor %}
+
+        
+        <!-- Ajoutez plus de lignes si nécessaire -->
+      </tbody>
+    </table>
+    <!-- Boutons de mise à jour et d'annulation -->
+    <button type="submit" style="float: left;">Mettre à jour</button>
+
+
+    {% block content %}
+    <a href="{% url 'tableau' %}" style="float: right;">
+      <button type="button">Annuler</button>
+    </a>
+    {% endblock content %}
+
+
+  </form>
+</body>
+</html>
+
+<style>
+  /* Style de base pour le tableau */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 1em;
+    font-family: Arial, sans-serif;
+    min-width: 600px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  /* Style des en-têtes */
+  thead th {
+    background-color: #4CAF50;
+    color: #ffffff;
+    text-align: left;
+    padding: 12px;
+  }
+
+  /* Style des cellules */
+  tbody td {
+    padding: 12px;
+    border-bottom: 1px solid #ddd;
+  }
+
+  /* Alternance de couleur pour les lignes */
+  tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+</style>
+{% endblock contents %}
+
