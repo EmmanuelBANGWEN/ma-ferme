@@ -7,7 +7,7 @@ def home(request):
 
 def tableau(request):
     mes_animaux = Animaux.objects.all()
-    mes_animaux = mes_animaux.order_by('date_naissance')
+    mes_animaux = mes_animaux.order_by('-date_naissance')
     context = {
          'mes_animaux' : mes_animaux,
     }
@@ -18,8 +18,8 @@ def update(request):
         for animal in Animaux.objects.all():
             # Récupérer les valeurs envoyées par le formulaire et mettre à jour l'objet
             animal.date_naissance = request.POST.get(f'date_naissance_{animal.id}', animal.date_naissance)
-            animal.date_enregistrement = request.POST.get(f'date_enregistrement_{animal.id}', animal.enregistrement)
-
+            animal.date_enregistrement = request.POST.get(f'date_enregistrement_{animal.id}', animal.date_enregistrement)
+            animal.age = request.POST.get(f'age_{animal.id}', animal.age)
             animal.poids = request.POST.get(f'poids_{animal.id}', animal.poids)
             animal.sexe = request.POST.get(f'sexe_{animal.id}', animal.sexe)
             animal.save()
