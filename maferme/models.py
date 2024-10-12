@@ -7,7 +7,7 @@ class Animaux(models.Model):
     identifiant = models.CharField(max_length=50)
     date_naissance = models.DateField(auto_now_add=False, null=True, blank=True)
     date_enregistrement = models.DateField(auto_now_add=True, null=True, blank=True)
-    age = models.CharField(max_length=50, null=True, blank=True)  # Change le type pour stocker en texte
+    age = models.CharField(max_length=50, null=True, blank=True)  
     poids = models.PositiveIntegerField()  
     
     STATUT_CHOICES =(
@@ -18,7 +18,7 @@ class Animaux(models.Model):
     
     
     def save(self, *args, **kwargs):
-        # Calcul de l'âge en années
+        # calcul l'âge en années
         if isinstance(self.date_naissance, str):
             self.date_naissance = datetime.strptime(self.date_naissance, "%Y-%m-%d").date()
         if isinstance(self.date_enregistrement, str):
@@ -30,12 +30,12 @@ class Animaux(models.Model):
             age_months = today.month - self.date_naissance.month
             age_days = today.day - self.date_naissance.day
             if age_years < 1:
-                # Si l'âge est inférieur à 1 an, afficher en mois
+                # Si âge est infé à 1 an, afficher en mois
                 age_in_months = age_months + (12 if age_days < 0 else 0)  # Compte les mois
                 age_in_months = age_in_months if age_in_months >= 0 else 0  # Éviter les valeurs négatives
                 self.age = f"{age_in_months} mois"
             else:
-                # Si l'âge est supérieur ou égal à 1 an, afficher en années, mois et jours
+                # Si âge est sup ou égal à 1, afficher en années, mois et jours
                 if age_days < 0:
                     age_months -= 1
                     age_days += 30  # Approximatif pour les jours

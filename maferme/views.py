@@ -1,13 +1,14 @@
 from django.shortcuts import render
 from .models import Animaux
+from django.shortcuts import render, redirect
+from django.contrib import messages
 
-# Create your views here.
 def home(request):
     return render(request, 'index.html')
 
 def tableau(request):
     mes_animaux = Animaux.objects.all()
-    mes_animaux = mes_animaux.order_by('-date_naissance')
+    mes_animaux = mes_animaux.order_by('-date_enregistrement')
     context = {
          'mes_animaux' : mes_animaux,
     }
@@ -16,7 +17,7 @@ def tableau(request):
 def update(request):
     if request.method == 'POST':
         for animal in Animaux.objects.all():
-            # Récupérer les valeurs envoyées par le formulaire et mettre à jour l'objet
+            # on recupere les valeurs envoyées par le formulaire et on  met à jour animal
             animal.date_naissance = request.POST.get(f'date_naissance_{animal.id}', animal.date_naissance)
             animal.date_enregistrement = request.POST.get(f'date_enregistrement_{animal.id}', animal.date_enregistrement)
             animal.age = request.POST.get(f'age_{animal.id}', animal.age)
@@ -31,12 +32,10 @@ def update(request):
 
 
 
-from django.shortcuts import render, redirect
-from django.contrib import messages
 
-# Prédéfinit le nom d'utilisateur et le mot de passe
-PREDEFINED_USERNAME = "django"  # Remplace par ton nom d'utilisateur
-PREDEFINED_PASSWORD = "django"  # Remplace par ton mot de passe
+# Identifiant
+PREDEFINED_USERNAME = "django"  
+PREDEFINED_PASSWORD = "django"  
 
 def connexion(request):
     if request.method == 'POST':
