@@ -6,6 +6,23 @@ from django.contrib import messages
 def home(request):
     return render(request, 'index.html')
 
+# Identifiant
+PREDEFINED_USERNAME = "django"  
+PREDEFINED_PASSWORD = "django"  
+
+def connexion(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        
+        if username == PREDEFINED_USERNAME and password == PREDEFINED_PASSWORD:
+            return redirect('tableau')  
+        else:
+            messages.error(request, "Nom d'utilisateur ou mot de passe incorrect")
+            
+    return render(request, 'connexion.html')
+
+
 def tableau(request):
     mes_animaux = Animaux.objects.all()
     mes_animaux = mes_animaux.order_by('-date_enregistrement')
@@ -30,21 +47,3 @@ def update(request):
         return render(request, 'update.html', {'mes_animaux': mes_animaux})
 
 
-
-
-
-# Identifiant
-PREDEFINED_USERNAME = "django"  
-PREDEFINED_PASSWORD = "django"  
-
-def connexion(request):
-    if request.method == 'POST':
-        username = request.POST.get('username')
-        password = request.POST.get('password')
-        
-        if username == PREDEFINED_USERNAME and password == PREDEFINED_PASSWORD:
-            return redirect('tableau')  
-        else:
-            messages.error(request, "Nom d'utilisateur ou mot de passe incorrect")
-            
-    return render(request, 'connexion.html')
